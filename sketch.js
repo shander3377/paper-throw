@@ -2,7 +2,8 @@ const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
-
+const Constraint = Matter.Constraint;
+var launcher1;
 
 
 function setup() {
@@ -16,7 +17,9 @@ function setup() {
 
 	dustbin1 = new Dustbin(600, 600, 100, 100)
 	
-	ground1 = new ground(width / 2, 650, 800, 20)
+	ground1 = new ground(width / 2, 50, 800, 20)
+
+	launcher1 = new launcher(paper1.body,{x: 100, y:200});
 
 
 	//packageBody = Bodies.circle(width/2 , 200 , 5 , {restitution:1.5, isStatic:false});
@@ -39,16 +42,15 @@ function draw() {
 	paper1.display();
 	dustbin1.display();
 	ground1.display();
+	launcher1.display()
 	drawSprites();
 
 }
 
-function keyPressed() {
 
-	if (keyCode === UP_ARROW) {
-		Matter.Body.applyForce(paper1.body, paper1.body.position, {
-			x: 40,
-			y: -35
-		});
-	}
+function mouseDragged() {
+Matter.Body.setPosition(paper1.body, {x: mouseX, y: mouseY})
+}
+function mouseReleased() {
+    launcher1.fly() 
 }
